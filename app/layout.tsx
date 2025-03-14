@@ -1,8 +1,9 @@
-import "./globals.css";
+import "./global.css";
 import { Metadata } from "next";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
 import { Geist } from "next/font/google";
+import { FileProvider } from "./context/FileContext";
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -14,10 +15,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${geist.className}`}>
       <body>
-        <ThemeProvider attribute="class" enableSystem forcedTheme="dark">
-          <Toaster position="top-center" richColors />
-          {children}
-        </ThemeProvider>
+        <FileProvider>
+                <ThemeProvider attribute="class" enableSystem forcedTheme="dark">
+                <Toaster position="top-center" richColors />
+                {children}
+                </ThemeProvider>
+        </FileProvider>
+        
       </body>
     </html>
   );

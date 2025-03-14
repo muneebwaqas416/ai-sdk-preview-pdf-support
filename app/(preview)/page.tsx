@@ -19,9 +19,10 @@ import { Progress } from "@/components/ui/progress";
 import Quiz from "@/components/quiz";
 import { Link } from "@/components/ui/link";
 import NextLink from "next/link";
-import { generateQuizTitle } from "./actions";
+import { generateQuizTitle } from "../actions";
 import { AnimatePresence, motion } from "framer-motion";
 import { VercelIcon, GitIcon } from "@/components/icons";
+import './global.css'
 
 export default function ChatWithFiles() {
   const [files, setFiles] = useState<File[]>([]);
