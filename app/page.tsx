@@ -57,27 +57,12 @@ export default function ChatWithFiles() {
       setFlashCards(object ?? [])
     }
   });
-  console.log(flashCardsQues)
   useEffect(()=>{ 
     if(flashCardsQues && flashCardsQues[0] && flashCardsQues.length>0){
       sessionStorage.setItem('flashCard' , JSON.stringify(flashCardsQues[0]));
       router.push('/flashCard')
     }
-    
   },[flashCards])
-  
-  // const {
-  //   submit: submitMatching,
-  //   object: matchingPairs,
-  //   isLoading: isLoadingMatching,
-  // } = experimental_useObject({
-  //   api: "/api/generate-matching",
-  //   schema: matchingSchema, // Define this schema
-  //   initialValue: undefined,
-  //   onError: () => toast.error("Failed to generate matching exercise."),
-  //   onFinish: ({ object }) => setMatchingPairs(object ?? []),
-  // });
-  
 
   const encodeFileAsBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -105,7 +90,6 @@ export default function ChatWithFiles() {
 
     if (type === "quiz") submitQuiz({ files: encodedFiles });
     else if (type === "flashcards") submitFlashCards({ files: encodedFiles });
-    //else submitMatching({ files: encodedFiles });
 
     const generatedTitle = await generateQuizTitle(encodedFiles[0].name);
     setTitle(generatedTitle);

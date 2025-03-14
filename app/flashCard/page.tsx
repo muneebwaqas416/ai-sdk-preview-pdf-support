@@ -5,8 +5,11 @@ import { Question, QuizState } from './types';
 import Flashcard from './flashCard';
 import QuizControls from './QuizControls';
 import Progress from './Progress';
+import { useFiles } from '../context/FileContext';
+import { generateQuizTitle } from '../actions';
 
 export default function Page() {
+  const {files} = useFiles();
   const [sampleQuestions, setSampleQuestions] = useState<Question[]>([]);
   const [quizState, setQuizState] = useState<QuizState>({
     currentQuestionIndex: 0,
@@ -14,21 +17,21 @@ export default function Page() {
     showAnswer: false,
     questions: sampleQuestions,
   });
-
-  useEffect(() => {
-    console.log(sampleQuestions)
-  }, [sampleQuestions])
-  
+  const [title, setTitle] = useState<string>();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedFlashCards = sessionStorage.getItem("flashCard");
       if (storedFlashCards) {
-        console.log(JSON.parse(storedFlashCards))
         setSampleQuestions(JSON.parse(storedFlashCards));
       }
     }
   }, []);
+
+  const setHeading = async ()=>{
+    const generatedTitle = await generateQuizTitle(files[0].name);
+    setTitle(generatedTitle);
+  }
 
   useEffect(() => {
     setQuizState(prev => ({
@@ -36,6 +39,7 @@ export default function Page() {
       questions: sampleQuestions,
       totalQuestions: sampleQuestions.length,
     }));
+    setHeading();
   }, [sampleQuestions]);
 
   const handleNext = () => {
@@ -70,7 +74,7 @@ export default function Page() {
     <div className="min-h-screen bg-slate-900 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold text-white mb-8 text-center">
-          Finance Quiz 1
+          {title}
         </h1>
         
         <Progress
