@@ -1,5 +1,4 @@
 import "./global.css";
-import { Metadata } from "next";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
 import { Geist } from "next/font/google";
