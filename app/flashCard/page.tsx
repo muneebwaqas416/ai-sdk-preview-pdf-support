@@ -7,6 +7,8 @@ import QuizControls from './QuizControls';
 import Progress from './Progress';
 import { useFiles } from '../context/FileContext';
 import { generateQuizTitle } from '../actions';
+import { ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const {files} = useFiles();
@@ -18,6 +20,7 @@ export default function Page() {
     questions: sampleQuestions,
   });
   const [title, setTitle] = useState<string>();
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -71,7 +74,15 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 py-12 px-4">
+    <div className="min-h-screen bg-slate-900 py-12 px-4 relative">
+      <button 
+        onClick={() => router.push('/')}
+        className="absolute top-4 left-4 text-white hover:text-gray-300 transition-colors flex items-center gap-2"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        <span>Back</span>
+      </button>
+
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold text-white mb-8 text-center">
           {title}
